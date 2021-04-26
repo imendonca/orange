@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt_br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+
+    <title>Cadastro Usuário</title>
+</head>
+<body>
+    <div class="text-center jumbotron">
+        <a style="color: black;" href="/"><h1>Cadastro de usuário</h1></a>
+    </div>
+
+    <div>
+        <form class="form-horizontal" method="POST">
+            <div class="form-group has-feedback">
+                <label for="nome" class="control-label col-sm-2">Nome Completo:</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="nome" name="nome">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="control-label col-sm-2">Email:</label>
+                <div class="col-sm-4">
+                    <input type="email" class="form-control" id="email" name="email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="nome" class="control-label col-sm-2">CPF:</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="cpf" name="cpf" onkeypress="$(this).mask('000.000.000-00');" minlength="14" maxlength="14">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="nome" class="control-label col-sm-2">Data de Nascimento:</label>
+                <div class="col-sm-4">
+                    <input type="date" class="form-control" id="dataNasc" name="dataNasc">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-success">Cadastrar</button>
+                </div>
+            </div>
+        </form>
+	        <div class="container">
+	        <a href="/" type="button" class="btn btn-primary btn-block btn-group-lg">Voltar</a>
+	        </div>    
+        </div>
+</body>
+</html>
