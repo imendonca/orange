@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -20,6 +21,7 @@ public class EnderecoService {
 
 	@Autowired
 	private CadastroEnderecoRepository repo;
+	@Autowired
 	private CadastroUsuarioRepository repouser;
 	
 	public Endereco buscar(Integer id) {
@@ -30,9 +32,19 @@ public class EnderecoService {
 		
 	public Endereco insert(Endereco end) {
 		
-		end.setPk_endereco(null);
-		return repo.save(end);
-	}
+
+			Usuario usuario = repouser.getOne(end.getIdusuario());
+		
+			try {
+				end.setUsuario(usuario);
+				end.setPk_endereco(null);
+				
+				return repo.save(end);
+			} catch (Exception e) {
+				throw new DataIntegrityViolationException("Dados inválidos!");
+			}	
+		}
+
 	
 	@GetMapping
 	public List<Endereco> findAll() {

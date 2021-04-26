@@ -9,14 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.NotNull;
 
 @Entity
@@ -44,6 +42,7 @@ public class Usuario implements Serializable{
 	@NotNull
 	private String dataNasc;
 	
+	@JsonBackReference
 	@OneToMany(mappedBy = "usuario")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
@@ -135,6 +134,5 @@ public class Usuario implements Serializable{
 			return false;
 		return true;
 	}
-	
 	
 }

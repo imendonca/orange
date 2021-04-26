@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -26,19 +28,22 @@ public class UsuarioService {
 	}
 		
 	public Usuario insert(Usuario usuario) {
-		Optional<Usuario> obj = repo.findByCpf(usuario.getCpf());
-		if(obj.isPresent()) {
-			return obj.orElseThrow(() -> new ObjectNotFoundException(
-					"Usuário já existente: " + usuario.getNome() + ", CPF: " + usuario.getCpf()));
-		}
-		obj = repo.findByEmail(usuario.getEmail());
-		if(obj.isPresent()) {
-			return obj.orElseThrow(() -> new ObjectNotFoundException(
-					"Usuário já existente: " + usuario.getNome() + ", Tipo: " + usuario.getEmail()));
-		}
+		Optional<Usuario> cpf = repo.findByCpf(usuario.getCpf());
+		Optional<Usuario> email = repo.findByEmail(usuario.getEmail());
 		
-		usuario.setPk_usuario(null);
-		return repo.save(usuario);
+		if(cpf.isEmpty() && email.isEmpty()) {
+			try {
+				usuario.setPk_usuario(null);
+				return repo.save(usuario);
+				
+			} catch (Exception e) {
+				throw new DataIntegrityViolationException("Dados inválidos!");
+			}
+
+		}
+		else
+			throw new DuplicateKeyException("CPF ou EMAIL já existente na base");
+		
 	}
 	
 	@GetMapping

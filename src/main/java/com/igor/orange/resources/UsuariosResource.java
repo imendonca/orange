@@ -40,13 +40,12 @@ public class UsuariosResource {
 		
 	}	
 	
-	@ResponseStatus(HttpStatus.CREATED)
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Usuario usuario){
 		usuario = us.insert(usuario);
 	
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/usuario/{id}").buildAndExpand(usuario.getPk_usuario()).toUri();
+				.path("/{id}").buildAndExpand(usuario.getPk_usuario()).toUri();
 	return ResponseEntity.created(uri).build();
 	}
 }
