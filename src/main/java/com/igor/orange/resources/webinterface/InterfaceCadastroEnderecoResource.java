@@ -29,7 +29,7 @@ public class InterfaceCadastroEnderecoResource {
 	public String cadastroEndereco(Endereco end) {
 		
 		es.insert(end);
-		return "redirect:cadastro_endereco";
+		return "cadastro_endereco";
 				
 	}
 	@ResponseStatus(HttpStatus.OK)
