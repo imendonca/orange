@@ -1,4 +1,4 @@
-package com.igor.orange.resources;
+package com.igor.orange.resources.webinterface;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.igor.orange.domain.Endereco;
-import com.igor.orange.repositories.CadastroEnderecoRepository;
+import com.igor.orange.services.EnderecoService;
 
 @Controller
 @RequestMapping
 public class InterfaceCadastroEnderecoResource {
 
 	@Autowired
-	private CadastroEnderecoRepository cer;
+	private EnderecoService es;
 	
 	@RequestMapping(value = "/cadastro_endereco", method=RequestMethod.GET)
 	public String cadastroEndereco() {
@@ -24,7 +24,7 @@ public class InterfaceCadastroEnderecoResource {
 	@RequestMapping(value = "/cadastro_endereco", method=RequestMethod.POST)
 	public String cadastroEndereco(Endereco end) {
 		
-		cer.save(end);
+		es.insert(end);
 		return "redirect:cadastro_endereco";
 				
 	}

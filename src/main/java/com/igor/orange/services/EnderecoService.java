@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.igor.orange.domain.Endereco;
 import com.igor.orange.domain.Usuario;
+import com.igor.orange.feignClient.ViaCep;
 import com.igor.orange.repositories.CadastroEnderecoRepository;
 import com.igor.orange.repositories.CadastroUsuarioRepository;
 import com.igor.orange.services.exceptions.ObjectNotFoundException;
@@ -23,31 +24,56 @@ public class EnderecoService {
 	private CadastroEnderecoRepository repo;
 	@Autowired
 	private CadastroUsuarioRepository repouser;
+	@Autowired
+	private ViaCep viacep;
 	
 	public Endereco buscar(Integer id) {
 		Optional<Endereco> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! ID: " + id + ", Tipo: " + Endereco.class.getName()));
 	}
+	
+	public Endereco buscarviausuario(Integer i) {
+		Optional<Endereco> obj = repo.findByIdusuario(i);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Endereco nao encontrado para o usuario: " + i + ", Tipo: " + Endereco.class.getName()));
+	}
 		
 	public Endereco insert(Endereco end) {
-		
 
 			Usuario usuario = repouser.getOne(end.getIdusuario());
+			Optional<Usuario> u = repouser.findById(usuario.getPk_usuario());
+			
+			if(u.isPresent()) {
+			
+			Endereco end2 = end;
+
+			end = viacep.buscaEndereco(end.getCep());
 		
 			try {
-				end.setUsuario(usuario);
-				end.setPk_endereco(null);
+					end.setIdusuario(end2.getIdusuario());
+					end.setComplemento(end2.getComplemento()); 
+					end.setNumero(end2.getNumero());
+					end.setUsuario(usuario); end.setPk_endereco(null);
+				  
+				  return repo.save(end); 
 				
-				return repo.save(end);
 			} catch (Exception e) {
 				throw new DataIntegrityViolationException("Dados inválidos!");
-			}	
+			}				
+			}
+			else 
+				throw new DataIntegrityViolationException("Usuário inexistente!");
+
 		}
 
 	
 	@GetMapping
 	public List<Endereco> findAll() {
 		return repo.findAll();
+	}
+	
+	public List<Usuario> usuario() {
+		return repouser.findAll();
 	}
 }

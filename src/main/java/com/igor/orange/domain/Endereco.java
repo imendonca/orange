@@ -23,13 +23,14 @@ public class Endereco implements Serializable{
 	private String logradouro;
 	@NotNull
 	private String numero;
+	
 	private String complemento;
 	@NotNull
 	private String bairro;
 	@NotNull
-	private String cidade;
+	private String localidade;
 	@NotNull
-	private String estado;
+	private String uf;
 	@NotNull
 	private String cep;
 		
@@ -45,19 +46,25 @@ public class Endereco implements Serializable{
 	}
 
 	public Endereco(Integer pk_endereco, String logradouro, String numero, String complemento, String bairro,
-			String cidade, String estado, String cep, int idusuario) {
+			String localidade, String uf, String cep, int idusuario) {
 		super();
 		this.pk_endereco = pk_endereco;
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.complemento = complemento;
 		this.bairro = bairro;
-		this.cidade = cidade;
-		this.estado = estado;
+		this.localidade = localidade;
+		this.uf = uf;
 		this.cep = cep;
 		this.idusuario = idusuario;
 	}
 
+	/*
+	 * public String toString() { return "Endereco{" + "cep='" + cep + '\'' +
+	 * ", logradouro='" + logradouro + '\'' + ", complemento='" + complemento + '\''
+	 * + ", bairro='" + bairro + '\'' + ", localidade='" + localidade + '\'' +
+	 * ", uf='" + uf + '\'' + '}'; }
+	 */
 	public Integer getPk_endereco() {
 		return pk_endereco;
 	}
@@ -98,20 +105,20 @@ public class Endereco implements Serializable{
 		this.bairro = bairro;
 	}
 
-	public String getCidade() {
-		return cidade;
+	public String getlocalidade() {
+		return localidade;
 	}
 
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
+	public void setlocalidade(String localidade) {
+		this.localidade = localidade;
 	}
 
-	public String getEstado() {
-		return estado;
+	public String getuf() {
+		return uf;
 	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public void setuf(String uf) {
+		this.uf = uf;
 	}
 
 	public String getCep() {

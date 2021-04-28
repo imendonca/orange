@@ -20,8 +20,7 @@ import com.igor.orange.services.EnderecoService;
 public class EnderecosResource {
 
 	@Autowired
-	private EnderecoService es;
-	
+	private EnderecoService es;	
 
 	@RequestMapping()
 	public List<Endereco> getall() {
@@ -37,14 +36,15 @@ public class EnderecosResource {
 		
 	}
 	
-	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Endereco end){
-		end = es.insert(end);
 	
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/endereco/{id}").buildAndExpand(end.getPk_endereco()).toUri();
-	return ResponseEntity.created(uri).build();
-	}
 	
+	  @RequestMapping(method=RequestMethod.POST) public ResponseEntity<Void>
+	  insert(@RequestBody Endereco end){ end = es.insert(end);
+	  
+	  URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+	  .path("/endereco/{id}").buildAndExpand(end.getPk_endereco()).toUri(); return
+	  ResponseEntity.created(uri).build(); }
+	 
+	 
 	
 }

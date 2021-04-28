@@ -1,6 +1,5 @@
 package com.igor.orange.resources;
 
-import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,29 +7,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.igor.orange.domain.Usuario;
-import com.igor.orange.domain.DTO.UsuarioDTO;
+import com.igor.orange.domain.DTO.UsuarioEnderecoDTO;
+import com.igor.orange.services.EnderecoService;
 import com.igor.orange.services.UsuarioService;
 
 @RestController
-@RequestMapping(value="/usuario")
-public class UsuariosResource {
-
+@RequestMapping(value="/consulta_usuario")
+public class ConsultaUsuario {
 	@Autowired
 	private UsuarioService us;
-	
+	@Autowired
+	private EnderecoService es;
 
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<?> getall() {
-		List<UsuarioDTO> listadto = us.findAll().stream().map(obj -> new UsuarioDTO(obj)).collect(Collectors.toList());
-		return ResponseEntity.ok().body(listadto);
+		List<UsuarioEnderecoDTO> userDTO = es.findAll().stream().map(obj -> new UsuarioEnderecoDTO((us.buscar(obj.getIdusuario())), obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(userDTO);
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
@@ -38,17 +35,10 @@ public class UsuariosResource {
 	public ResponseEntity<?> listar(@PathVariable Integer id) {
 		
 		
-		Usuario obj = us.buscar(id);
-		return ResponseEntity.ok().body(obj);
+		UsuarioEnderecoDTO user = new UsuarioEnderecoDTO(us.buscar(id),es.buscarviausuario(id));
+		return ResponseEntity.ok().body(user);
 		
 	}	
 	
-	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Usuario usuario){
-		usuario = us.insert(usuario);
 	
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(usuario.getPk_usuario()).toUri();
-	return ResponseEntity.created(uri).build();
-	}
 }
