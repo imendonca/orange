@@ -32,6 +32,8 @@ public class UsuarioService {
 		Optional<Usuario> email = repo.findByEmail(usuario.getEmail());
 		
 		if(cpf.isEmpty() && email.isEmpty()) {
+			if(!(usuario.getCpf().isBlank() || usuario.getDataNasc().isBlank() || usuario.getEmail().isBlank() || usuario.getNome().isBlank())) {
+				
 			try {
 				usuario.setPk_usuario(null);
 				return repo.save(usuario);
@@ -39,6 +41,9 @@ public class UsuarioService {
 			} catch (Exception e) {
 				throw new DataIntegrityViolationException("Dados inválidos!");
 			}
+			}
+			else
+				throw new DataIntegrityViolationException("Dados inválidos!");
 
 		}
 		else

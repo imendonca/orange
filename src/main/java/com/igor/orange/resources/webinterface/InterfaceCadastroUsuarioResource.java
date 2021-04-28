@@ -17,6 +17,7 @@ public class InterfaceCadastroUsuarioResource {
 	@Autowired
 	private UsuarioService us;
 
+	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/cadastro_usuario", method=RequestMethod.GET)
 	public String cadastro_usuario() {
 		return "cadastro_usuario";
@@ -27,7 +28,13 @@ public class InterfaceCadastroUsuarioResource {
 	public String cadastro_usuario(Usuario usuario) {
 		
 		us.insert(usuario);
-		return "/cadastro_usuario";
+		return "cadastro_usuario";
+	}
+	
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value="cadastro_usuario/{id}", method=RequestMethod.GET)
+	public String retornacadastroUsuario() {
+		return "cadastro_usuario";
 	}
 	
 }

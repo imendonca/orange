@@ -40,14 +40,25 @@ public class EnderecoService {
 	}
 		
 	public Endereco insert(Endereco end) {
+		
+		
+		
+		if(end.getIdusuario() == null){
+			throw new DataIntegrityViolationException("Dados inválidos, preencher campo idusuário!");
+		}
+		else {
+			
+			Usuario usuario = repouser.getOne(end.getIdusuario());			
+			
 
-			Usuario usuario = repouser.getOne(end.getIdusuario());
 			Optional<Usuario> u = repouser.findById(usuario.getPk_usuario());
+			
 			
 			if(u.isPresent()) {
 			
-			Endereco end2 = end;
+				if(!(end.getNumero().isBlank())) {
 
+			Endereco end2 = end;
 			end = viacep.buscaEndereco(end.getCep());
 		
 			try {
@@ -60,11 +71,15 @@ public class EnderecoService {
 				
 			} catch (Exception e) {
 				throw new DataIntegrityViolationException("Dados inválidos!");
-			}				
+			}	
+				}
+				else
+					throw new DataIntegrityViolationException("Dados inválidos, preencher campo numero!");
+			
 			}
 			else 
-				throw new DataIntegrityViolationException("Usuário inexistente!");
-
+				throw new ObjectNotFoundException("Usuário inexistente!");
+		}
 		}
 
 	
@@ -73,7 +88,5 @@ public class EnderecoService {
 		return repo.findAll();
 	}
 	
-	public List<Usuario> usuario() {
-		return repouser.findAll();
-	}
+
 }

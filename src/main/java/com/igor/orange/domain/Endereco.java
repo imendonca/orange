@@ -39,7 +39,7 @@ public class Endereco implements Serializable{
 	private Usuario usuario;
 	
 	@NotNull
-	private int idusuario;
+	private Integer idusuario;
 	
 	public Endereco() {
 		
@@ -129,11 +129,11 @@ public class Endereco implements Serializable{
 		this.cep = cep;
 	}
 
-	public int getIdusuario() {
+	public Integer getIdusuario() {
 		return idusuario;
 	}
 
-	public void setIdusuario(int idusuario) {
+	public void setIdusuario(Integer idusuario) {
 		this.idusuario = idusuario;
 	}
 
