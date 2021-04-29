@@ -33,7 +33,8 @@ public class EnderecoService {
 				"Objeto não encontrado! ID: " + id + ", Tipo: " + Endereco.class.getName()));
 	}
 	
-	public Endereco buscarviausuario(Integer i) {
+	public Endereco buscarviausuario(Integer i) {	
+		
 		Optional<Endereco> obj = repo.findByIdusuario(i);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Endereco nao encontrado para o usuario: " + i + ", Tipo: " + Endereco.class.getName()));

@@ -34,9 +34,8 @@ public class ConsultaUsuario {
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<?> listar(@PathVariable Integer id) {
 		
-		
-		UsuarioEnderecoDTO user = new UsuarioEnderecoDTO(us.buscar(id),es.buscarviausuario(id));
-		return ResponseEntity.ok().body(user);
+		List<UsuarioEnderecoDTO> userDTO = es.findAll().stream().map(obj -> new UsuarioEnderecoDTO((us.buscar(obj.getIdusuario())), obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(userDTO);
 		
 	}	
 	

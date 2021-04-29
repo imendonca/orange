@@ -1,4 +1,4 @@
-package com.igor.orange.services;
+package com.igor.orange.resources;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import com.igor.orange.feignClient.ViaCep;
 
 @Service
 @RequestMapping(value="/cep")
-public class ViaCepService {
+public class ViaCepResource {
 	
 	@Autowired
 	private ViaCep viacep;

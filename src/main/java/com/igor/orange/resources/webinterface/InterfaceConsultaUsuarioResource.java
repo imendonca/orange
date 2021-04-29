@@ -16,7 +16,7 @@ import com.igor.orange.services.EnderecoService;
 import com.igor.orange.services.UsuarioService;
 
 @Controller
-public class InterfaceConsultaUsuario {
+public class InterfaceConsultaUsuarioResource {
 	
 	@Autowired
 	EnderecoService es;

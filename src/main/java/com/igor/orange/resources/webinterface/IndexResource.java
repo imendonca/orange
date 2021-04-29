@@ -1,4 +1,4 @@
-package com.igor.orange.resources;
+package com.igor.orange.resources.webinterface;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
